@@ -69,12 +69,12 @@ def add_page():
     # Obtenir l'ID de l'aéroport à partir du nom de ville
     departure_airport_id = city_airports_departure.get(departure_city )
     # Afficher l'ID de l'aéroport
-    st.write(f"ID de l'aéroport de départ: {departure_airport_id}")
+    # st.write(f"ID de l'aéroport de départ: {departure_airport_id}")
     city_airports_arrival = {v: k for k, v in airport_cities.items()}
     origin_city = st.selectbox("Ville d'arrivée", options=list(city_airports_arrival.keys()))
     # Obtenir l'ID de l'aéroport à partir du nom de ville
     arrival_airport_id = city_airports_arrival.get(origin_city)
-    st.write(f"ID de l'aéroport de d'arrivée: {arrival_airport_id}")
+    # st.write(f"ID de l'aéroport de d'arrivée: {arrival_airport_id}")
     # dest_airport_id = st.number_input("ID de l'aéroport d'arrivée", min_value=0)
     dep_time = st.time_input("Heure de départ")
     arr_time = st.time_input("Heure d'arrivé")
