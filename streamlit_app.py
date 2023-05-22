@@ -57,55 +57,66 @@ def transform_hour_back(hour_int):
 
 # Fonction pour la page "Ajouter"
 def add_page():
-
-    # Formulaire pour ajouter un vol à l'API
     st.title("Ajouter un vol")
+    show_image = False
+    col1, col2, col3 = st.columns(3)
 
-    date = st.date_input("Date du vol")
-    # Création d' un dictionnaire qui associe les noms de ville aux IDs d'aéroport
-    city_airports_departure = {v: k for k, v in airport_cities.items()}
-    # Afficher une liste déroulante avec les noms de ville
-    departure_city = st.selectbox("Ville de départ", options=list(city_airports_departure.keys()))
-    # Obtenir l'ID de l'aéroport à partir du nom de ville
-    departure_airport_id = city_airports_departure.get(departure_city )
-    # Afficher l'ID de l'aéroport
-    # st.write(f"ID de l'aéroport de départ: {departure_airport_id}")
-    city_airports_arrival = {v: k for k, v in airport_cities.items()}
-    origin_city = st.selectbox("Ville d'arrivée", options=list(city_airports_arrival.keys()))
-    # Obtenir l'ID de l'aéroport à partir du nom de ville
-    arrival_airport_id = city_airports_arrival.get(origin_city)
-    # st.write(f"ID de l'aéroport de d'arrivée: {arrival_airport_id}")
-    # dest_airport_id = st.number_input("ID de l'aéroport d'arrivée", min_value=0)
-    dep_time = st.time_input("Heure de départ")
-    arr_time = st.time_input("Heure d'arrivée")
-    origin_airport_id = departure_airport_id
-    vacation =  insert_data(date)
-    # Ajout bouton pour envoyer les données
-    if st.button("Ajouter"):
-        date_time = datetime.strptime(str(date), "%Y-%m-%d")
-        quarter = (date_time.month - 1) // 3 + 1
-        month = date.month
-        day_of_month = date.day
-        day_of_week = date.isoweekday()
-        flight_data = {
-            "QUARTER": quarter,
-            "MONTH":   month,
-            "DAY_OF_MONTH": day_of_month,
-            "DAY_OF_WEEK": day_of_week,
-            "ORIGIN_AIRPORT_ID": origin_airport_id,
-            "DEST_AIRPORT_ID":  arrival_airport_id ,
-            "DEP_TIME": transform_hour(dep_time.strftime("%H:%M")),
-            "ARR_TIME": transform_hour(arr_time.strftime("%H:%M")),
-            "VACATION":  vacation
-        }
+    with col1:
 
-        # Envoyer les données à l'API
-        response = requests.post(url1, json=flight_data)
-        # Vérifier si la requête a réussi
-        if response.ok:
-            st.success("Les informations de votre vol ont été ajouté avec succès !")
-        else:
-            st.error("Erreur lors de l'ajout des informations de votre vol.")
+
+        # Création d' un dictionnaire qui associe les noms de ville aux IDs d'aéroport
+        city_airports_departure = {v: k for k, v in airport_cities.items()}
+        # Afficher une liste déroulante avec les noms de ville
+        departure_city = st.selectbox("Ville de départ", options=list(city_airports_departure.keys()))
+        # Obtenir l'ID de l'aéroport à partir du nom de ville
+        departure_airport_id = city_airports_departure.get(departure_city )
+        # Afficher l'ID de l'aéroport
+        # st.write(f"ID de l'aéroport de départ: {departure_airport_id}")
+        dep_time = st.time_input("Heure de départ")
+        date = st.date_input("Date du vol")
+
+    with col2:
+        city_airports_arrival = {v: k for k, v in airport_cities.items()}
+        origin_city = st.selectbox("Ville d'arrivée", options=list(city_airports_arrival.keys()))
+        # Obtenir l'ID de l'aéroport à partir du nom de ville
+        arrival_airport_id = city_airports_arrival.get(origin_city)
+        # st.write(f"ID de l'aéroport de d'arrivée: {arrival_airport_id}")
+        # dest_airport_id = st.number_input("ID de l'aéroport d'arrivée", min_value=0)
+        arr_time = st.time_input("Heure d'arrivée")
+        origin_airport_id = departure_airport_id
+
+        vacation =  insert_data(date)
+        # Ajout bouton pour envoyer les données
+        if st.button("Ajouter Vol", key="ajouter_vol_button"):
+            date_time = datetime.strptime(str(date), "%Y-%m-%d")
+            quarter = (date_time.month - 1) // 3 + 1
+            month = date.month
+            day_of_month = date.day
+            day_of_week = date.isoweekday()
+            flight_data = {
+                "QUARTER": quarter,
+                "MONTH":   month,
+                "DAY_OF_MONTH": day_of_month,
+                "DAY_OF_WEEK": day_of_week,
+                "ORIGIN_AIRPORT_ID": origin_airport_id,
+                "DEST_AIRPORT_ID":  arrival_airport_id ,
+                "DEP_TIME": transform_hour(dep_time.strftime("%H:%M")),
+                "ARR_TIME": transform_hour(arr_time.strftime("%H:%M")),
+                "VACATION":  vacation
+            }
+
+            # Envoyer les données à l'API
+            response = requests.post(url1, json=flight_data)
+            # Vérifier si la requête a réussi
+            if response.ok:
+                show_image = True
+                st.success("Les informations de votre vol ont été ajouté avec succès !")
+            else:
+                st.error("Erreur lors de l'ajout des informations de votre vol.")
+    with col3:
+            if show_image:
+                st.title("Prediction")
+                st.image("https://static.streamlit.io/examples/cat.jpg")
 
 # Fonction pour la page "Métriques"
 def metrics_page():
@@ -155,7 +166,7 @@ def charts_page():
 
 #---------------------  Sidebar  ----------------------#
 # Menu déroulant pour sélectionner la page à afficher
-menu = ["Ajouter", "Métriques", "Graphiques"]
+menu = ["Infos Vol", "Métriques", "Graphiques"]
 choice = st.sidebar.selectbox(" ", menu)
 st.sidebar.title("Boarding Pass")
 image = Image.open('img1.PNG')
@@ -164,7 +175,7 @@ st.sidebar.image(im, caption='Sunrise by the mountains')
 
 
 # Affichage de la page correspondant à la sélection du menu
-if choice == "Ajouter":
+if choice == "Infos Vol":
     add_page()
 elif choice == "Métriques":
     metrics_page()
