@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 import pickle
 from PIL import Image
+import time
 
 
 
@@ -110,6 +111,8 @@ def add_page():
             # Vérifier si la requête a réussi
             if response.ok:
                 show_image = True
+                with st.spinner('Wait for it...'):
+                    time.sleep(2)
                 st.success("Les informations de votre vol ont été ajouté avec succès !")
             else:
                 st.error("Erreur lors de l'ajout des informations de votre vol.")
