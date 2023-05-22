@@ -119,8 +119,14 @@ def add_page():
     with col3:
             if show_image:
                 st.title("Prediction")
-                st.image("https://static.streamlit.io/examples/cat.jpg")
+                # st.image("https://static.streamlit.io/examples/cat.jpg")
 
+
+                # st.image("https://media.giphy.com/media/gH9GW5asoGtZQl452a/giphy.gif", width=150, )
+                # st.info("Votre vol sera à l'heure")
+
+                st.image("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWQ1ZTE4ODk5MTQ3ZDQwYjI4MDYxYjIyNDZhZDNmMTVmNGM0ZGYxMSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/dZRnfrqClmNUt8Swwo/giphy.gif", width=150, )
+                st.warning("Votre vol aura du retard")
 # Fonction pour la page "Métriques"
 def metrics_page():
     st.title("Métriques")
