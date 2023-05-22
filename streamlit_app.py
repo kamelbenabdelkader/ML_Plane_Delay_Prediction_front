@@ -156,10 +156,10 @@ def charts_page():
 #---------------------  Sidebar  ----------------------#
 # Menu déroulant pour sélectionner la page à afficher
 menu = ["Ajouter", "Métriques", "Graphiques"]
-choice = st.sidebar.selectbox("Sélectionnez une page", menu)
+choice = st.sidebar.selectbox(" ", menu)
 st.sidebar.title("Boarding Pass")
 image = Image.open('img1.PNG')
-im = image.resize((150, 300))
+im = image.resize((150, 250))
 st.sidebar.image(im, caption='Sunrise by the mountains')
 
 
