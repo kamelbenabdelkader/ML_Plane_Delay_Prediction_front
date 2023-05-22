@@ -28,6 +28,7 @@ div.css-1629p8f.e16nr0p31 h1{
 } */
 
 span.css-10trblm.e16nr0p30 {
+  font-size: 70px!important ;
   text-transform: uppercase;
   background-image: linear-gradient(
    -225deg,
@@ -132,4 +133,12 @@ div.stButton > button:first-child {
  to {
    background-position: 200% center;
  }
+}
+
+
+div.css-16idsys.e16nr0p34 p{
+  font-size: 20px!important ;
+  font-weight: bold;
+
+
 }
