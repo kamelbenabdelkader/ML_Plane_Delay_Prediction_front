@@ -77,7 +77,7 @@ def add_page():
     # st.write(f"ID de l'aéroport de d'arrivée: {arrival_airport_id}")
     # dest_airport_id = st.number_input("ID de l'aéroport d'arrivée", min_value=0)
     dep_time = st.time_input("Heure de départ")
-    arr_time = st.time_input("Heure d'arrivé")
+    arr_time = st.time_input("Heure d'arrivée")
     origin_airport_id = departure_airport_id
     vacation =  insert_data(date)
     # Ajout bouton pour envoyer les données
