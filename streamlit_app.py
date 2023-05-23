@@ -5,6 +5,7 @@ import pandas as pd
 import pickle
 from PIL import Image
 import time
+import sklearn
 
 
 model = pickle.load(open('model.pkl', 'rb'))
@@ -130,7 +131,7 @@ def add_page():
                 donne = pd.DataFrame.from_dict([flight_data])
                 # donne = pd.DataFrame(quarter, month, day_of_month, day_of_week,
                 # origin_airport_id, arrival_airport_id , dep_time , arr_time, vacation)
-                st.table(donne)
+                # st.table(donne)
                 prediction = model.predict(donne)
                 # proba = model.predict(donne)
                 st.write("Prédiction :", prediction)
