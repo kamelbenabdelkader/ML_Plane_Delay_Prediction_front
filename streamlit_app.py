@@ -7,7 +7,7 @@ from PIL import Image
 import time
 
 
-model = pickle.load(open('model.pkl', 'rb'))
+# model = pickle.load(open('model.pkl', 'rb'))
 
 # # Fonction qui charge le modèle entraîné
 # def load_model():
