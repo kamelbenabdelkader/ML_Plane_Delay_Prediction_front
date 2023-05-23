@@ -7,7 +7,7 @@ from PIL import Image
 import time
 
 
-# model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
 # # Fonction qui charge le modèle entraîné
 # def load_model():
@@ -127,21 +127,26 @@ def add_page():
     with col3:
             if show_predict:
                 st.title("Prediction")
-                # donne = pd.DataFrame.from_dict(flight_data)
+                donne = pd.DataFrame.from_dict([flight_data])
                 # donne = pd.DataFrame(quarter, month, day_of_month, day_of_week,
                 # origin_airport_id, arrival_airport_id , dep_time , arr_time, vacation)
-                # st.table(donne)
-                # prediction = model.predict(donne)
-                # st.write("Prédiction :", prediction)
+                st.table(donne)
+                prediction = model.predict(donne)
+                # proba = model.predict(donne)
+                st.write("Prédiction :", prediction)
+
+                proba = (pd.DataFrame(model.predict_proba(donne),columns=['pas retard','retard'])*100).astype(int)
+                proba[['pas retard', 'retard']] = proba[['pas retard', 'retard']].applymap('{:.0f}%'.format)
+                st.write("Proba:", proba)
                 # st.image("https://static.streamlit.io/examples/cat.jpg")
 
-                if vacation == 0 :
-                 st.image("https://media.giphy.com/media/gH9GW5asoGtZQl452a/giphy.gif", width=150, )
-                 st.info("Votre vol sera à l'heure")
+                # if vacation == 0 :
+                #  st.image("https://media.giphy.com/media/gH9GW5asoGtZQl452a/giphy.gif", width=150, )
+                #  st.info("Votre vol sera à l'heure")
 
-                else :
-                    st.image("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWQ1ZTE4ODk5MTQ3ZDQwYjI4MDYxYjIyNDZhZDNmMTVmNGM0ZGYxMSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/dZRnfrqClmNUt8Swwo/giphy.gif", width=150, )
-                    st.warning("Votre vol aura du retard")
+                # else :
+                #     st.image("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWQ1ZTE4ODk5MTQ3ZDQwYjI4MDYxYjIyNDZhZDNmMTVmNGM0ZGYxMSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/dZRnfrqClmNUt8Swwo/giphy.gif", width=150, )
+                #     st.warning("Votre vol aura du retard")
 
 # Fonction pour la page "Métriques"
 def metrics_page():
